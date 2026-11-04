@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Provas | ENEM Dev</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body data-page="provas">
+  <header class="site-header">
+    <div class="container header-content">
+      <a class="logo" href="home.html">ENEM<span>Dev</span></a>
+
+      <nav aria-label="Navegação principal">
+        <a href="home.html">Início</a>
+        <a class="active" href="enem.html">Provas</a>
+        <a href="questoes.html">Questões</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container page-content">
+    <section class="page-heading">
+      <p class="tag">ACERVO DO ENEM</p>
+      <h1>Provas disponíveis</h1>
+      <p>Escolha um ano para ver as áreas e os idiomas da prova.</p>
+    </section>
+
+    <p id="provas-status" class="status" role="status">Carregando provas...</p>
+    <div id="lista-provas" class="exam-grid"></div>
+
+    <section id="detalhes-prova" class="detail-box" hidden>
+      <h2 id="titulo-prova"></h2>
+      <p id="info-prova"></p>
+      <div id="areas-prova" class="chips"></div>
+      <a id="link-questoes" class="button" href="questoes.html">Ver questões da prova</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      Dados da <a href="https://docs.enem.dev/api-reference/provas/listar-provas" target="_blank" rel="noopener noreferrer">API enem.dev</a>.
+    </div>
+  </footer>
+</body>
+
+</html>

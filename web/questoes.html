@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Questões | ENEM Dev</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body data-page="questoes">
+  <header class="site-header">
+    <div class="container header-content">
+      <a class="logo" href="home.html">ENEM<span>Dev</span></a>
+
+      <nav aria-label="Navegação principal">
+        <a href="home.html">Início</a>
+        <a href="enem.html">Provas</a>
+        <a class="active" href="questoes.html">Questões</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container page-content">
+    <section class="page-heading">
+      <p class="tag">PRATIQUE NO SEU RITMO</p>
+      <h1>Questões do ENEM</h1>
+      <p>Escolha o ano e a área. Clique em uma questão para responder.</p>
+    </section>
+
+    <section class="filters" aria-label="Filtros das questões">
+      <label>
+        Ano da prova
+        <select id="ano">
+          <option value="">Carregando...</option>
+        </select>
+      </label>
+
+      <label>
+        Área do conhecimento
+        <select id="area">
+          <option value="todas">Todas as áreas</option>
+          <option value="linguagens">Linguagens</option>
+          <option value="ciencias-humanas">Ciências Humanas</option>
+          <option value="ciencias-natureza">Ciências da Natureza</option>
+          <option value="matematica">Matemática</option>
+        </select>
+      </label>
+
+      <label>
+        Língua estrangeira
+        <select id="idioma">
+          <option value="espanhol">Espanhol</option>
+          <option value="ingles">Inglês</option>
+        </select>
+      </label>
+    </section>
+
+    <p class="note">O idioma muda apenas as questões de língua estrangeira.</p>
+    <p id="questoes-status" class="status" role="status">Carregando questões...</p>
+    <div id="lista-questoes" class="question-list"></div>
+
+    <div id="paginacao" class="pagination" hidden>
+      <button id="anterior" type="button">← Anterior</button>
+      <span id="pagina-atual"></span>
+      <button id="proxima" type="button">Próxima →</button>
+    </div>
+
+    <section id="questao-aberta" class="detail-box question-detail" hidden aria-live="polite">
+      <div class="detail-header">
+        <h2 id="titulo-questao"></h2>
+        <button id="fechar-questao" class="close-button" type="button" aria-label="Fechar questão">×</button>
+      </div>
+
+      <div id="enunciado"></div>
+      <div id="alternativas"></div>
+      <p id="resposta" class="answer-message" role="status" hidden></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      Questões e gabaritos da
+      <a href="https://docs.enem.dev/api-reference/questões/listar-questões" target="_blank" rel="noopener noreferrer">API enem.dev</a>.
+    </div>
+  </footer>
+</body>
+
+</html>
