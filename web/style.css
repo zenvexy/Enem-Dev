@@ -177,7 +177,6 @@ p {
   padding: 28px;
 }
 
-.area-card:hover,
 .exam-card:hover,
 .question-card:hover {
   border-color: var(--green);
@@ -193,12 +192,7 @@ p {
 
 .area-card p {
   color: var(--muted);
-  margin-bottom: 24px;
-}
-
-.card-link {
-  color: var(--green);
-  font-weight: 700;
+  margin-bottom: 0;
 }
 
 .note {
