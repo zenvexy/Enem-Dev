@@ -4,6 +4,7 @@ const editor = document.querySelector('#rascunho');
 const temaLivre = document.querySelector('#tema-livre');
 const fonte = document.querySelector('#fonte');
 const tamanho = document.querySelector('#tamanho');
+const botaoPdf = document.querySelector('#salvar-pdf');
 const botoesTemas = [...document.querySelectorAll('[data-tema]')];
 const RECUO = '\t';
 
@@ -94,6 +95,7 @@ function atualizarContadores() {
   document.querySelector('#aviso-linhas').hidden = !excedeu;
   document.querySelector('.editor-stats').classList.toggle('over-limit', excedeu);
   document.querySelector('.line-progress').classList.toggle('over-limit', excedeu);
+  botaoPdf.disabled = !texto;
 }
 
 
@@ -196,6 +198,23 @@ document.querySelector('#limpar-rascunho').addEventListener('click', () => {
     salvarRascunho();
     editor.focus();
   }
+});
+
+
+botaoPdf.addEventListener('click', () => {
+  if (!editor.value.trim()) {
+    return;
+  }
+
+  const titulo = temaSelecionado || 'Tema livre';
+  const textoPdf = document.querySelector('#pdf-texto');
+
+  document.querySelector('#pdf-tema').textContent = titulo;
+  textoPdf.textContent = editor.value;
+  textoPdf.style.fontFamily = fontes[fonte.value] || fontes.arial;
+  textoPdf.style.fontSize = `${Number(tamanho.value) || 18}px`;
+
+  window.print();
 });
 
 

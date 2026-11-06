@@ -111,7 +111,10 @@
 
         <button id="novo-paragrafo" class="secondary-button" type="button">+ Novo parágrafo com recuo</button>
         <button id="limpar-rascunho" class="secondary-button" type="button">Limpar rascunho</button>
+        <button id="salvar-pdf" class="button" type="button" aria-describedby="ajuda-pdf">Salvar em PDF</button>
       </div>
+
+      <p id="ajuda-pdf" class="editor-hint">Na janela de impressão, escolha “Salvar como PDF”.</p>
 
       <label class="editor-label" for="rascunho">Texto da redação</label>
       <p class="editor-hint">Folha de treino com 30 linhas. Use “Novo parágrafo” para ir à linha seguinte com recuo, ou Tab para recuar no cursor.</p>
@@ -136,7 +139,7 @@
         </p>
 
         <p id="editor-limite" class="note">
-          O rascunho é salvo apenas neste navegador. A contagem é uma estimativa;
+          O rascunho é salvo automaticamente neste navegador. A contagem é uma estimativa;
           confira as linhas na folha oficial ao treinar.
         </p>
       </div>
@@ -146,6 +149,11 @@
   <footer class="site-footer">
     <div class="container">ENEM Dev · propostas de treino e rascunho de redação.</div>
   </footer>
+
+  <article id="rascunho-pdf" class="print-draft">
+    <h1 id="pdf-tema"></h1>
+    <div id="pdf-texto" class="print-draft-text"></div>
+  </article>
 </body>
 
 </html>
