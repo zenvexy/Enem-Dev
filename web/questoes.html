@@ -18,6 +18,7 @@
         <a href="home.html">Início</a>
         <a href="enem.html">Provas</a>
         <a class="active" href="questoes.html">Questões</a>
+        <a href="redacao.html">Redação</a>
       </nav>
     </div>
   </header>
@@ -26,7 +27,7 @@
     <section class="page-heading">
       <p class="tag">PRATIQUE COM QUESTÕES REAIS</p>
       <h1>Pratique questões do ENEM</h1>
-      <p>Escolha um ano e uma área para começar a responder.</p>
+      <p>Escolha um ano e uma área. Abra uma questão para responder em tela cheia.</p>
     </section>
 
     <section class="filters" aria-label="Filtros das questões">
@@ -67,16 +68,27 @@
       <button id="proxima" type="button">Próxima →</button>
     </div>
 
-    <section id="questao-aberta" class="detail-box question-detail" hidden aria-live="polite">
-      <div class="detail-header">
-        <h2 id="titulo-questao"></h2>
-        <button id="fechar-questao" class="close-button" type="button" aria-label="Fechar questão">×</button>
+    <dialog id="questao-aberta" class="question-detail" aria-labelledby="titulo-questao">
+      <div class="question-topbar">
+        <div class="question-topbar-inner">
+          <span id="posicao-questao"></span>
+
+          <div class="question-topbar-actions">
+            <button id="questao-anterior" class="secondary-button" type="button" hidden>← Anterior</button>
+            <button id="proxima-questao" class="button" type="button" hidden>Próxima →</button>
+            <button id="fechar-questao" class="close-button" type="button" aria-label="Fechar questão">×</button>
+          </div>
+        </div>
       </div>
 
-      <div id="enunciado"></div>
-      <div id="alternativas"></div>
-      <p id="resposta" class="answer-message" role="status" hidden></p>
-    </section>
+      <div class="question-content">
+        <h2 id="titulo-questao"></h2>
+        <div id="enunciado"></div>
+        <div id="alternativas"></div>
+        <p id="resposta" class="answer-message" role="status" hidden></p>
+        <p id="fim-questoes" class="question-end" hidden>Você chegou ao fim das questões desta seleção.</p>
+      </div>
+    </dialog>
   </main>
 
   <footer class="site-footer">

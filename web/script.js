@@ -172,12 +172,17 @@ async function iniciarPaginaQuestoes() {
   const status = document.querySelector('#questoes-status');
   const lista = document.querySelector('#lista-questoes');
   const paginacao = document.querySelector('#paginacao');
+  const painel = document.querySelector('#questao-aberta');
   const parametros = new URLSearchParams(window.location.search);
 
   let todasQuestoes = [];
   let pagina = 0;
   let carregamentoAtual = 0;
   let carregando = false;
+  let indiceAberto = null;
+  let aberturaAtual = 0;
+  let origemFoco = null;
+  const porPagina = 10;
 
   if (NOMES_AREAS[parametros.get('area')]) {
     areaSelect.value = parametros.get('area');
@@ -262,13 +267,16 @@ async function iniciarPaginaQuestoes() {
     }
   }
 
-  function mostrarLista() {
+  function questoesFiltradas() {
     const area = areaSelect.value;
-    const filtradas = area === 'todas'
+
+    return area === 'todas'
       ? todasQuestoes
       : todasQuestoes.filter((questao) => questao.discipline === area);
+  }
 
-    const porPagina = 10;
+  function mostrarLista() {
+    const filtradas = questoesFiltradas();
     const totalPaginas = Math.ceil(filtradas.length / porPagina);
     const visiveis = filtradas.slice(pagina * porPagina, (pagina + 1) * porPagina);
 
@@ -296,18 +304,45 @@ async function iniciarPaginaQuestoes() {
   async function abrirQuestao(index) {
     const ano = anoSelect.value;
     const idioma = idiomaSelect.value;
-    const painel = document.querySelector('#questao-aberta');
+    const filtradas = questoesFiltradas();
+    const posicao = filtradas.findIndex((questao) => String(questao.index) === String(index));
 
-    painel.hidden = false;
+    if (posicao < 0) {
+      return;
+    }
+
+    indiceAberto = String(index);
+    const meuPedido = ++aberturaAtual;
+    const botaoAnterior = document.querySelector('#questao-anterior');
+    const botaoProxima = document.querySelector('#proxima-questao');
+
+    document.querySelector('#posicao-questao').textContent =
+      `Questão ${posicao + 1} de ${filtradas.length}`;
+
+    botaoAnterior.hidden = posicao === 0;
+    botaoAnterior.disabled = true;
+    botaoProxima.hidden = posicao === filtradas.length - 1;
+    botaoProxima.disabled = true;
+    document.querySelector('#fim-questoes').hidden = !botaoProxima.hidden;
+
+    if (!painel.open) {
+      origemFoco = document.activeElement;
+      painel.showModal();
+      document.body.classList.add('question-open');
+    }
+
+    painel.scrollTop = 0;
     document.querySelector('#titulo-questao').textContent = 'Carregando questão...';
     document.querySelector('#enunciado').innerHTML = '';
     document.querySelector('#alternativas').innerHTML = '';
     document.querySelector('#resposta').hidden = true;
-    painel.scrollIntoView({ behavior: 'smooth' });
-
     try {
       const rota = `/exams/${ano}/questions/${index}?language=${idioma}`;
       const questao = await buscarNaApi(rota);
+
+      if (meuPedido !== aberturaAtual) {
+        return;
+      }
 
       document.querySelector('#titulo-questao').textContent = questao.title;
 
@@ -359,15 +394,49 @@ async function iniciarPaginaQuestoes() {
         resposta.hidden = false;
         alternativas.onclick = null;
       };
+
+      botaoAnterior.disabled = false;
+      botaoProxima.disabled = false;
+
+      if (botaoProxima.hidden) {
+        document.querySelector('#fechar-questao').focus();
+      }
     } catch (erro) {
+      if (meuPedido !== aberturaAtual) {
+        return;
+      }
+
       document.querySelector('#titulo-questao').textContent = 'Erro ao abrir questão';
       document.querySelector('#enunciado').textContent = erro.message;
+      botaoAnterior.disabled = false;
+      botaoProxima.disabled = false;
     }
   }
 
-  function fecharQuestao() {
-    document.querySelector('#questao-aberta').hidden = true;
+  function finalizarQuestao() {
+    if (indiceAberto === null && origemFoco === null) {
+      return;
+    }
+
+    aberturaAtual++;
+    indiceAberto = null;
+    document.body.classList.remove('question-open');
+    origemFoco?.focus({ preventScroll: true });
+    origemFoco = null;
   }
+
+  function fecharQuestao() {
+    if (painel.open) {
+      painel.close();
+      finalizarQuestao();
+    }
+  }
+
+  painel.addEventListener('close', () => {
+    if (!painel.open && indiceAberto !== null) {
+      finalizarQuestao();
+    }
+  });
 
   anoSelect.addEventListener('change', carregarQuestoes);
   idiomaSelect.addEventListener('change', carregarQuestoes);
@@ -391,13 +460,31 @@ async function iniciarPaginaQuestoes() {
 
   document.querySelector('#anterior').addEventListener('click', () => {
     pagina--;
+    fecharQuestao();
     mostrarLista();
   });
 
   document.querySelector('#proxima').addEventListener('click', () => {
     pagina++;
+    fecharQuestao();
     mostrarLista();
   });
+
+  function mudarQuestao(direcao) {
+    const filtradas = questoesFiltradas();
+    const posicao = filtradas.findIndex((questao) => String(questao.index) === indiceAberto);
+    const novaPosicao = posicao + direcao;
+    const destino = filtradas[novaPosicao];
+
+    if (posicao < 0 || !destino) {
+      return;
+    }
+
+    abrirQuestao(destino.index);
+  }
+
+  document.querySelector('#questao-anterior').addEventListener('click', () => mudarQuestao(-1));
+  document.querySelector('#proxima-questao').addEventListener('click', () => mudarQuestao(1));
 
   document.querySelector('#fechar-questao').addEventListener('click', fecharQuestao);
 }

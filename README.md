@@ -9,7 +9,12 @@ diretamente na API pública [enem.dev](https://docs.enem.dev/introduction).
 - **Início:** apresenta as quatro áreas do conhecimento cobradas no ENEM.
 - **Provas:** mostra os anos disponíveis e os detalhes de cada edição.
 - **Questões:** permite escolher o ano, a área e o idioma de língua estrangeira,
-  abrir uma questão e conferir a resposta após a tentativa.
+  abrir uma questão em tela cheia, conferir a resposta após a tentativa e
+  passar para a questão anterior ou seguinte sem sair dessa tela.
+- **Redação:** oferece propostas autorais de treino e uma folha de rascunho
+  fixa, com 30 linhas visuais, ajustes de fonte, recuo pelo botão de novo
+  parágrafo ou pela tecla Tab e contagem estimada de linhas. O texto fica salvo
+  no navegador usado para escrever.
 
 ## Preview do site
 
@@ -32,6 +37,7 @@ encaminha para a página inicial em `web/home.html`.
 
 Para testar as demais páginas diretamente, use os links de navegação do site ou
 abra `web/enem.html` e `web/questoes.html` pelo servidor do Live Server.
+O treino de redação está em `web/redacao.html`.
 
 ## Como a API é usada
 
@@ -80,6 +86,9 @@ A rota de questões aceita parâmetros na URL. O projeto usa os seguintes:
 Depois de receber todas as páginas de questões, o site filtra a área escolhida
 no próprio navegador. As áreas disponíveis são `linguagens`,
 `ciencias-humanas`, `ciencias-natureza` e `matematica`.
+
+A página de redação funciona sem chamadas à API; seus temas são propostas de
+treino, não temas oficiais ou previsões.
 
 ### Exemplo de uso em JavaScript
 

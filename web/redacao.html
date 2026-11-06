@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Escolha um tema de treino e escreva um rascunho de redação para o ENEM.">
+  <title>Redação | ENEM Dev</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="redacao.js" defer></script>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container header-content">
+      <a class="logo" href="home.html">ENEM<span>Dev</span></a>
+
+      <nav aria-label="Navegação principal">
+        <a href="home.html">Início</a>
+        <a href="enem.html">Provas</a>
+        <a href="questoes.html">Questões</a>
+        <a class="active" href="redacao.html">Redação</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container page-content">
+    <section class="page-heading">
+      <p class="tag">PRÁTICA DE REDAÇÃO</p>
+      <h1>Treine sua redação</h1>
+      <p>Escolha um tema, organize seus parágrafos e acompanhe o tamanho do rascunho.</p>
+    </section>
+
+    <section class="writing-info" aria-label="Informação sobre a prova">
+      <strong>Na prova do ENEM</strong>
+      <p>
+        O texto definitivo deve ser dissertativo-argumentativo e ter até 30 linhas.
+        Escrever mais de 30 linhas não é permitido na folha definitiva.
+        Este editor é apenas um treino; a contagem digital é uma estimativa.
+      </p>
+      <a href="https://www.gov.br/inep/pt-br/centrais-de-conteudo/noticias/enem/enem-2026-cartilha-da-redacao-esta-disponivel"
+         target="_blank" rel="noopener noreferrer">Orientações do Inep ↗</a>
+    </section>
+
+    <section class="section writing-section" aria-labelledby="temas-titulo">
+      <div class="section-title">
+        <h2 id="temas-titulo">Temas para praticar</h2>
+        <p>Estas propostas foram criadas para treino. Não são temas oficiais nem previsões.</p>
+      </div>
+
+      <div class="theme-grid" id="lista-temas">
+        <button class="theme-card" type="button" data-tema="Desafios para combater a desinformação sobre saúde no Brasil" aria-pressed="false">
+          <span>SAÚDE E INFORMAÇÃO</span>
+          <strong>Desafios para combater a desinformação sobre saúde no Brasil</strong>
+        </button>
+
+        <button class="theme-card" type="button" data-tema="Caminhos para ampliar a acessibilidade digital no Brasil" aria-pressed="false">
+          <span>TECNOLOGIA E INCLUSÃO</span>
+          <strong>Caminhos para ampliar a acessibilidade digital no Brasil</strong>
+        </button>
+
+        <button class="theme-card" type="button" data-tema="Desafios para reduzir o desperdício de água nas cidades brasileiras" aria-pressed="false">
+          <span>MEIO AMBIENTE</span>
+          <strong>Desafios para reduzir o desperdício de água nas cidades brasileiras</strong>
+        </button>
+
+        <button class="theme-card" type="button" data-tema="Caminhos para enfrentar a evasão escolar entre jovens no Brasil" aria-pressed="false">
+          <span>EDUCAÇÃO</span>
+          <strong>Caminhos para enfrentar a evasão escolar entre jovens no Brasil</strong>
+        </button>
+
+        <button class="theme-card" type="button" data-tema="Desafios para proteger a saúde mental dos adolescentes no Brasil" aria-pressed="false">
+          <span>JUVENTUDE</span>
+          <strong>Desafios para proteger a saúde mental dos adolescentes no Brasil</strong>
+        </button>
+
+        <button class="theme-card" type="button" data-tema="Caminhos para valorizar as culturas indígenas na sociedade brasileira" aria-pressed="false">
+          <span>CULTURA E CIDADANIA</span>
+          <strong>Caminhos para valorizar as culturas indígenas na sociedade brasileira</strong>
+        </button>
+      </div>
+
+      <label class="custom-theme" for="tema-livre">
+        Ou escreva seu próprio tema
+        <input id="tema-livre" type="text" maxlength="180" placeholder="Digite um tema para praticar">
+      </label>
+    </section>
+
+    <section class="section writing-section" aria-labelledby="rascunho-titulo">
+      <div class="section-title">
+        <h2 id="rascunho-titulo">Seu rascunho</h2>
+        <p id="tema-selecionado">Selecione um tema acima ou escreva o seu.</p>
+      </div>
+
+      <div class="editor-toolbar">
+        <label for="fonte">Fonte
+          <select id="fonte">
+            <option value="arial">Sem serifa</option>
+            <option value="georgia">Com serifa</option>
+            <option value="mono">Monoespaçada</option>
+          </select>
+        </label>
+
+        <label for="tamanho">Tamanho
+          <select id="tamanho">
+            <option value="16">Pequeno</option>
+            <option value="18" selected>Médio</option>
+            <option value="20">Grande</option>
+          </select>
+        </label>
+
+        <button id="novo-paragrafo" class="secondary-button" type="button">+ Novo parágrafo com recuo</button>
+        <button id="limpar-rascunho" class="secondary-button" type="button">Limpar rascunho</button>
+      </div>
+
+      <label class="editor-label" for="rascunho">Texto da redação</label>
+      <p class="editor-hint">Folha de treino com 30 linhas. Use “Novo parágrafo” para ir à linha seguinte com recuo, ou Tab para recuar no cursor.</p>
+
+      <div class="writing-sheet">
+        <div class="paper">
+          <textarea id="rascunho" spellcheck="true" aria-describedby="editor-limite"
+                    placeholder="Comece sua introdução aqui..."></textarea>
+        </div>
+
+        <div class="editor-stats">
+          <span id="contador-linhas">0 de 30 linhas estimadas</span>
+          <span id="contador-palavras">0 palavras</span>
+          <span id="contador-paragrafos">0 parágrafos</span>
+        </div>
+
+        <div class="line-progress" aria-hidden="true"><span id="progresso-linhas"></span></div>
+
+        <p id="aviso-linhas" class="line-warning" role="status" hidden>
+          Seu texto passou de 30 linhas estimadas. No ENEM, a redação definitiva
+          deve caber em até 30 linhas; texto além disso não é permitido.
+        </p>
+
+        <p id="editor-limite" class="note">
+          O rascunho é salvo apenas neste navegador. A contagem é uma estimativa;
+          confira as linhas na folha oficial ao treinar.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">ENEM Dev · propostas de treino e rascunho de redação.</div>
+  </footer>
+</body>
+
+</html>
